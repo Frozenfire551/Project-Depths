@@ -75,10 +75,30 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 
 void APlayerCharacter::move(const FInputActionValue& _Value)
 {
+	FVector2D PlayersVector = _Value.Get<FVector2D>();
+	if (GetController())
+	{
+
+		FRotator Rotation = Controller->GetControlRotation();
+		FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
+
+		FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(ForwardDirection, PlayersVector.Y);
+		FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(RightDirection, PlayersVector.X);
+		
+	}
 }
 
 void APlayerCharacter::look(const FInputActionValue& _Value)
 {
+	FVector2D cameraVector = _Value.Get<FVector2D>();
+	if (GetController())
+	{
+		AddControllerYawInput(cameraVector.X);
+		AddControllerPitchInput(cameraVector.Y);
+		//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Red, FString::Printf(TEXT("Controller Failed %f"), cameraDirection.Y));
+	}
 }
 
 void APlayerCharacter::jump()
