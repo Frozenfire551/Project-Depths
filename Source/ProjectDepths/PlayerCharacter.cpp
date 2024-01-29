@@ -63,7 +63,7 @@ void APlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCom
 		enchancedInputComp->BindAction(IA_Move, ETriggerEvent::Triggered, this, &APlayerCharacter::move);
 		enchancedInputComp->BindAction(IA_CameraMove, ETriggerEvent::Triggered, this, &APlayerCharacter::look);
 		enchancedInputComp->BindAction(IA_Jump, ETriggerEvent::Triggered, this, &APlayerCharacter::jump);
-		enchancedInputComp->BindAction(IA_Crouch, ETriggerEvent::Triggered, this, &APlayerCharacter::couch);
+		enchancedInputComp->BindAction(IA_Crouch, ETriggerEvent::Started, this, &APlayerCharacter::couch);
 		enchancedInputComp->BindAction(IA_Interact, ETriggerEvent::Triggered, this, &APlayerCharacter::intact);
 		enchancedInputComp->BindAction(IA_EquipmentWheel, ETriggerEvent::Triggered, this, &APlayerCharacter::changeItem);
 	}
@@ -109,7 +109,20 @@ void APlayerCharacter::jump()
 
 void APlayerCharacter::couch()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player Press B"));
+	if (IsCrouching == true)
+	{
+		UnCrouch();
+		SkeletalMesh->AddRelativeLocation(FVector(0,0,-50));
+		IsCrouching = false;
+		
+	}
+	else
+	{
+		Crouch();
+		SkeletalMesh->AddRelativeLocation(FVector(0, 0, 50));
+		IsCrouching = true;
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, FString::Printf(TEXT("Player Press B %s"), IsCrouching ? TEXT("true") : TEXT("false")));
 }
 
 void APlayerCharacter::intact()

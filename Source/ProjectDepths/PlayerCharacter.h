@@ -45,6 +45,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input")
 		TObjectPtr<UInputAction> IA_EquipmentWheel;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controls")
+		bool IsCrouching = false;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controls")
+		bool IsCrawling = false;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
