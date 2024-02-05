@@ -127,10 +127,13 @@ void APlayerCharacter::couch()
 
 void APlayerCharacter::intact()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player Press X"));
+	//GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player Press X"));
+	Interact_Called(this);
 }
 
 void APlayerCharacter::changeItem()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Player Press Y"));
 }
+
+

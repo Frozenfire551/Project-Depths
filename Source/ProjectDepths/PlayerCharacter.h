@@ -49,6 +49,8 @@ public:
 		bool IsCrouching = false;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Controls")
 		bool IsCrawling = false;
+	/*UCLASS(Blueprintable)
+		void InteractNow();*/
 
 protected:
 	// Called when the game starts or when spawned
@@ -67,4 +69,7 @@ public:
 	void couch();
 	void intact();
 	void changeItem();
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void Interact_Called(AActor* Player);
 };
